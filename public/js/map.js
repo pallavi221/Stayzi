@@ -4,7 +4,7 @@ if (typeof window === "undefined") {
 }
 
 // Get the token from environment variables
-const mapToken = process.env.MAP_token;
+const mapToken = process.env.MAP_TOKEN;
 
 // Only run this in the browser
 if (typeof window !== "undefined") {
