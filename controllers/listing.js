@@ -22,6 +22,8 @@ module.exports.showListing=async (req,res)=>{
                 return res.redirect("/listings");
             }
             console.log("DEBUG listing",JSON.stringify(listing, null, 2));
+            console.log("Owner in listing:", listing.owner);
+
             res.render("listings/show",{listing,currUser: req.user});
         };
 
