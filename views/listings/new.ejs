@@ -1,12 +1,5 @@
-<%-layout("layouts/boilerplate")%>
-
-<% if (messages.error && messages.error.length > 0) { %>
-  <% messages.error.forEach(function(err) { %>
-    <div class="bg-red-100 text-red-700 text-center font-semibold py-2 mb-1">
-      <%= err %>
-    </div>
-  <% }) %>
-<% } %>
+   <%-layout("layouts/boilerplate")%>
+   <!-- 
 
  <div class="row mt-3">
    <div class="col-8 offset-2">
@@ -77,5 +70,105 @@
     </form>
     <br>
     </div>
-    </div>
+    </div> --> 
 
+
+
+<!-- Flash Messages as Bootstrap Alerts -->
+<% if (typeof messages !== 'undefined' && messages.error && messages.error.length > 0) { %>
+  <% messages.error.forEach(function(err) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= err %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% }) %>
+<% } %>
+
+<% if (typeof messages !== 'undefined' && messages.success && messages.success.length > 0) { %>
+  <% messages.success.forEach(function(msg) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= msg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% }) %>
+<% } %>
+
+
+<div class="row mt-3">
+  <div class="col-8 offset-2">
+    <h3>Create a New Listing</h3>
+    <br>
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+      
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input 
+          name="listing[title]" 
+          placeholder="Make your title stand out"
+          type="text" 
+          class="form-control" 
+          required
+          value="<%= formData ? formData.title : '' %>"
+        >
+        <div class="valid-feedback">Your title literally stands out!!</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea 
+          name="listing[description]"  
+          class="form-control" 
+          required
+        ><%= formData ? formData.description : '' %></textarea>
+        <div class="invalid-feedback">Oops!! You forgot to enter the description.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload Image</label>
+        <input name="listing[image]" type="file" class="form-control" required>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Enter price</label>
+          <input 
+            name="listing[price]" 
+            placeholder="1500" 
+            class="form-control" 
+            required
+            value="<%= formData ? formData.price : '' %>"
+          >
+          <div class="invalid-feedback">C'mon, you can't forget this!!</div>
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Enter country</label>
+          <input 
+            name="listing[country]" 
+            placeholder="India" 
+            type="text" 
+            class="form-control" 
+            required
+            value="<%= formData ? formData.country : '' %>"
+          >
+          <div class="invalid-feedback">Please enter the country.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="location" class="form-label">Enter location</label>
+        <input 
+          name="listing[location]" 
+          placeholder="Udaipur, Rajasthan"
+          type="text" 
+          class="form-control" 
+          required
+          value="<%= formData ? formData.location : '' %>"
+        >
+        <div class="invalid-feedback">Please enter the location!!</div>
+      </div> 
+
+      <button class="btn btn-dark add-btn mt-3">Add</button>
+    </form>
+  </div>
+</div>
