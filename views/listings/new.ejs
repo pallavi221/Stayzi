@@ -1,7 +1,6 @@
    <%-layout("layouts/boilerplate")%>
-   <!-- 
-
- <div class="row mt-3">
+   
+<div class="row mt-3">
    <div class="col-8 offset-2">
     <h3> Create a New listing</h3>
    </br>
@@ -28,8 +27,8 @@
             <div class="mb-3">
                 <label for="image" class="form-label">Uplod Image</label>
                 <input name="listing[image]" 
-                type="file" class="form-control"/>
-                required
+                type="file" class="form-control" required/>
+                
             </div>
      
             <div class="row">
@@ -70,118 +69,12 @@
     </form>
     <br>
     </div>
-    </div> --> 
+    </div> 
 
 
 
-<!-- Flash Messages as Bootstrap Alerts -->
 
-<%
-// Ensure messages and formData always exist to prevent EJS errors
-messages = messages || { error: [], success: [] };
-formData = formData || {};
-%>
 
-<!-- Flash Messages as Bootstrap Alerts -->
-<% messages.error.forEach(function(err) { %>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <%= err %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% }) %>
 
-<% messages.success.forEach(function(msg) { %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= msg %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% }) %>
 
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-    <h3>Create a New Listing</h3>
-    <br>
-    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
-      
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input 
-          name="listing[title]" 
-          placeholder="Make your title stand out"
-          type="text" 
-          class="form-control" 
-          required
-          value="<%= formData.title %>"
-        >
-        <div class="valid-feedback">Your title literally stands out!!</div>
-      </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea 
-          name="listing[description]"  
-          class="form-control" 
-          required
-        ><%= formData.description %></textarea>
-        <div class="invalid-feedback">Oops!! You forgot to enter the description.</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Image</label>
-        <input name="listing[image]" type="file" class="form-control">
-      </div>
-
-      <div class="row">
-        <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Enter price</label>
-          <input 
-            name="listing[price]" 
-            placeholder="1500" 
-            class="form-control" 
-            required
-            value="<%= formData.price %>"
-          >
-          <div class="invalid-feedback">C'mon, you can't forget this!!</div>
-        </div>
-
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Enter country</label>
-          <input 
-            name="listing[country]" 
-            placeholder="India" 
-            type="text" 
-            class="form-control" 
-            required
-            value="<%= formData.country %>"
-          >
-          <div class="invalid-feedback">Please enter the country.</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="location" class="form-label">Enter location</label>
-        <input 
-          name="listing[location]" 
-          placeholder="Udaipur, Rajasthan"
-          type="text" 
-          class="form-control" 
-          required
-          value="<%= formData.location %>"
-        >
-        <div class="invalid-feedback">Please enter the location!!</div>
-      </div> 
-
-      <button class="btn btn-dark add-btn mt-3">Add</button>
-    </form>
-  </div>
-</div>
-
-<!-- Optional: Auto-hide alerts after 5 seconds -->
-<script>
-  setTimeout(() => {
-    document.querySelectorAll('.alert').forEach(alert => {
-      alert.classList.remove('show');
-      alert.classList.add('hide');
-    });
-  }, 5000);
-</script>
