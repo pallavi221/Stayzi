@@ -47,7 +47,7 @@ module.exports.validateListing = (req, res, next) => {
 
     // ✅ Re-render same page instead of throwing error
     return res.render("listings/new", {
-      messages: req.flash(),
+      messages: req.flash("error","Please fill all the given Entries"),
       formData: req.body.listing
     });
   }
