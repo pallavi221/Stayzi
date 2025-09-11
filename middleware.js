@@ -29,14 +29,29 @@ module.exports.isOwner=async (req,res,next)=>{
      next();
 }
 
-module.exports.validateListing=(req,res,next)=>{
-     let {error}=listingSchema.validate(req.body,{ abortEarly: false });
-   if(error){
-    let errMsg=error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,errMsg);
-   }else{
-    next();
-   }
+// module.exports.validateListing=(req,res,next)=>{
+//      let {error}=listingSchema.validate(req.body,{ abortEarly: false });
+//    if(error){
+//     let errMsg=error.details.map((el)=>el.message).join(",");
+//     throw new ExpressError(400,errMsg);
+//    }else{
+//     next();
+//    }
+// };
+
+module.exports.validateListing = (req, res, next) => {
+  const { error } = listingSchema.validate(req.body, { abortEarly: false }); // ✅ show all errors
+  if (error) {
+    const errors = error.details.map(el => el.message); // array of messages
+    errors.forEach(err => req.flash("error", err));
+
+    // ✅ Re-render same page instead of throwing error
+    return res.render("listings/new", {
+      messages: req.flash(),
+      formData: req.body.listing
+    });
+  }
+  next();
 };
 
 
