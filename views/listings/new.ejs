@@ -75,6 +75,8 @@
 
 
 <!-- Flash Messages as Bootstrap Alerts -->
+ <% messages = messages || { error: [], success: [] } %>
+
 <% if (typeof messages !== 'undefined' && messages.error && messages.error.length > 0) { %>
   <% messages.error.forEach(function(err) { %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
