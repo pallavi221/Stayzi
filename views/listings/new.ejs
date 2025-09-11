@@ -75,26 +75,27 @@
 
 
 <!-- Flash Messages as Bootstrap Alerts -->
- <% messages = messages || { error: [], success: [] } %>
 
-<% if (typeof messages !== 'undefined' && messages.error && messages.error.length > 0) { %>
-  <% messages.error.forEach(function(err) { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <%= err %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% }) %>
-<% } %>
+<%
+// Ensure messages and formData always exist to prevent EJS errors
+messages = messages || { error: [], success: [] };
+formData = formData || {};
+%>
 
-<% if (typeof messages !== 'undefined' && messages.success && messages.success.length > 0) { %>
-  <% messages.success.forEach(function(msg) { %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <%= msg %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% }) %>
-<% } %>
+<!-- Flash Messages as Bootstrap Alerts -->
+<% messages.error.forEach(function(err) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= err %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% }) %>
 
+<% messages.success.forEach(function(msg) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% }) %>
 
 <div class="row mt-3">
   <div class="col-8 offset-2">
@@ -110,7 +111,7 @@
           type="text" 
           class="form-control" 
           required
-          value="<%= formData ? formData.title : '' %>"
+          value="<%= formData.title %>"
         >
         <div class="valid-feedback">Your title literally stands out!!</div>
       </div>
@@ -121,13 +122,13 @@
           name="listing[description]"  
           class="form-control" 
           required
-        ><%= formData ? formData.description : '' %></textarea>
+        ><%= formData.description %></textarea>
         <div class="invalid-feedback">Oops!! You forgot to enter the description.</div>
       </div>
 
       <div class="mb-3">
         <label for="image" class="form-label">Upload Image</label>
-        <input name="listing[image]" type="file" class="form-control" required>
+        <input name="listing[image]" type="file" class="form-control">
       </div>
 
       <div class="row">
@@ -138,7 +139,7 @@
             placeholder="1500" 
             class="form-control" 
             required
-            value="<%= formData ? formData.price : '' %>"
+            value="<%= formData.price %>"
           >
           <div class="invalid-feedback">C'mon, you can't forget this!!</div>
         </div>
@@ -151,7 +152,7 @@
             type="text" 
             class="form-control" 
             required
-            value="<%= formData ? formData.country : '' %>"
+            value="<%= formData.country %>"
           >
           <div class="invalid-feedback">Please enter the country.</div>
         </div>
@@ -165,7 +166,7 @@
           type="text" 
           class="form-control" 
           required
-          value="<%= formData ? formData.location : '' %>"
+          value="<%= formData.location %>"
         >
         <div class="invalid-feedback">Please enter the location!!</div>
       </div> 
@@ -174,3 +175,13 @@
     </form>
   </div>
 </div>
+
+<!-- Optional: Auto-hide alerts after 5 seconds -->
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(alert => {
+      alert.classList.remove('show');
+      alert.classList.add('hide');
+    });
+  }, 5000);
+</script>

@@ -78,7 +78,7 @@ module.exports.createListing = async (req, res, next) => {
     console.error(err);
     req.flash("error", "Something went wrong. Please try again.");
     res.render("listings/new", {
-      messages: req.flash(),
+      messages: req.flash()|| { error: [], success: [] },
       formData: req.body.listing,
     });
   }
