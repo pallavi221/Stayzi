@@ -27,33 +27,63 @@ module.exports.showListing=async (req,res)=>{
             res.render("listings/show",{listing,currUser: req.user});
         };
 
-module.exports.createListing=async (req,res,next)=>{
+module.exports.createListing = async (req, res, next) => {
+  try {
+    // Extract listing data
+    const { title, description, price, location, country } = req.body.listing;
 
- let response = await geocodingClient.forwardGeocode({
-   query: req.body.listing.location,
- limit: 1
- })
- .send();
+    // Collect validation errors
+    let errors = [];
 
- 
-  let url=req.file.path;
-  let filename=req.file.filename;
+    if (!title || title.trim() === "") errors.push("Title cannot be empty.");
+    if (!description || description.trim() === "") errors.push("Description cannot be empty.");
+    if (!price || price <= 0) errors.push("Price must be greater than 0.");
+    if (!location || location.trim() === "") errors.push("Location cannot be empty.");
+    if (!country || country.trim() === "") errors.push("Country cannot be empty.");
 
-const newListing= new Listing(req.body.listing);
-newListing.owner=req.user._id;
-newListing.image={url,filename};
+    // If any errors → flash them and re-render new form
+    if (errors.length > 0) {
+      errors.forEach((err) => req.flash("error", err));
+      return res.render("listings/new", {
+        messages: req.flash(),
+        formData: req.body.listing, // so user doesn't lose input
+      });
+    }
 
-newListing.geometry={
-  type:"Point",
-  coordinates:response.body.features[0].geometry.coordinates
-}
+    // ✅ If validation passes → proceed with geocoding
+    let response = await geocodingClient
+      .forwardGeocode({
+        query: location,
+        limit: 1,
+      })
+      .send();
 
-let savedListing=await newListing.save();
-console.log(savedListing);
-req.flash("success","New Listing created");
-res.redirect("/listings");
-            
-               };
+    let url = req.file.path;
+    let filename = req.file.filename;
+
+    const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    newListing.image = { url, filename };
+    newListing.geometry = {
+      type: "Point",
+      coordinates: response.body.features[0].geometry.coordinates,
+    };
+
+    let savedListing = await newListing.save();
+    console.log(savedListing);
+
+    req.flash("success", "New Listing created");
+    res.redirect("/listings");
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Something went wrong. Please try again.");
+    res.render("listings/new", {
+      messages: req.flash(),
+      formData: req.body.listing,
+    });
+  }
+};
+
 
 module.exports.renderEditForm=async(req,res,next)=>{
      let {id}=req.params;
