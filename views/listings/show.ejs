@@ -64,21 +64,21 @@
   <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
 <fieldset class="starability-slot">
-    <% const rating = formData.rating || 0; %>
+  <% const rating = (typeof formData !== "undefined" && formData.rating) ? formData.rating : 0; %>
   
-  <input type="radio" id="rate5" name="reviews[rating]" value="5" <%= formData && formData.rating == 5 ? 'checked' : '' %> />
+  <input type="radio" id="rate5" name="reviews[rating]" value="5" <%= rating == 5 ? 'checked' : '' %> />
   <label for="rate5">5 stars</label>
 
-  <input type="radio" id="rate4" name="reviews[rating]" value="4" <%= formData && formData.rating == 4 ? 'checked' : '' %>/>
+  <input type="radio" id="rate4" name="reviews[rating]" value="4" <%= rating == 4 ? 'checked' : '' %>/>
   <label for="rate4">4 stars</label>
 
-  <input type="radio" id="rate3" name="reviews[rating]" value="3" <%= formData && formData.rating == 3 ? 'checked' : '' %>/>
+  <input type="radio" id="rate3" name="reviews[rating]" value="3" <%=rating == 3 ? 'checked' : '' %>/>
   <label for="rate3">3 stars</label>
 
-  <input type="radio" id="rate2" name="reviews[rating]" value="2" <%= formData && formData.rating == 2? 'checked' : '' %>/>
+  <input type="radio" id="rate2" name="reviews[rating]" value="2" <%= rating == 2? 'checked' : '' %>/>
   <label for="rate2">2 stars</label>
 
-  <input type="radio" id="rate1" name="reviews[rating]" value="1" <%= formData && formData.rating == 1? 'checked' : '' %>/>
+  <input type="radio" id="rate1" name="reviews[rating]" value="1" <%= rating == 1? 'checked' : '' %>/>
   <label for="rate1">1 star</label>
 </fieldset>
 </div>
@@ -131,7 +131,7 @@
         <div class="mb-3 mt-3">
           <label for="comment" class="form-label">Comments</label>
           <textarea name="reviews[comment]" id="comment" cols="30" rows="5"
-           class="form-control" required><%= formData && formData.comment ? formData.comment : '' %></textarea>
+           class="form-control" required><%= (typeof formData !== "undefined" && formData.comment) ? formData.comment : '' %></textarea>
            <div class="invalid-feedback">Please add some comments for review</div>
         </div>
         <button class="btn btn-outline-dark">Submit</button>

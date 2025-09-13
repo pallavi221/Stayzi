@@ -83,7 +83,7 @@ module.exports.validateReview = async (req, res, next) => {
     return res.status(400).render("listings/show", {
       listing,
       errors: [errMsg],
-      formData: { rating, comment }
+      formData: { rating:'', comment:'' }
     });
   } else {
     next();
