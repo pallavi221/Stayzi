@@ -55,16 +55,41 @@ module.exports.validateListing = (req, res, next) => {
 };
 
 
-module.exports.validateReview=(req,res,next)=>{
-     let {error}=reviewSchema.validate(req.body);
+// module.exports.validateReview=(req,res,next)=>{
+//      let {error}=reviewSchema.validate(req.body);
   
-   if(error){
-    let errMsg=error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,errMsg);
-   }else{
+//    if(error){
+//     let errMsg=error.details.map((el)=>el.message).join(",");
+//     throw new ExpressError(400,errMsg);
+//    }else{
+//     next();
+//    }
+// };
+
+const Listing = require("../models/listing.js");
+
+module.exports.validateReview = async (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body);
+
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(", ");
+
+    // ✅ Get the listing so we can re-render the same page
+    const listing = await Listing.findById(req.params.id).populate("reviews");
+
+    // ✅ Preserve any form data user entered
+    const { rating, comment } = req.body.reviews;
+
+    return res.status(400).render("listings/show", {
+      listing,
+      errors: [errMsg],
+      formData: { rating, comment }
+    });
+  } else {
     next();
-   }
+  }
 };
+
 
 
 module.exports.isReviewAuthor=async (req,res,next)=>{
