@@ -6,6 +6,7 @@ const mongoose=require("mongoose");
   const reviewSchema=new Schema({
     comment:{
         type:String,
+        required:true
     },
     rating:{
         type:Number,
