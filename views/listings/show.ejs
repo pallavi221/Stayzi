@@ -64,6 +64,7 @@
   <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
 <fieldset class="starability-slot">
+    <% const rating = formData.rating || 0; %>
   
   <input type="radio" id="rate5" name="reviews[rating]" value="5" <%= formData && formData.rating == 5 ? 'checked' : '' %> />
   <label for="rate5">5 stars</label>
