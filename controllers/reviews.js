@@ -48,13 +48,19 @@ module.exports.createReview = async (req, res) => {
     if (!comment || comment.trim() === "") errors.push("Please write a comment.");
 
     if (errors.length > 0) {
+      errors.for((err) => req.flash("error", err));
       // ✅ Stay on the same page and display errors
       return res.render("listings/show", {
-        listing,
-        errors,
-        formData: { rating, comment },
-        currentUser: req.user // so you can still check if logged-in user can delete reviews
+        messages: req.flash(),
+        formData: req.body.reviews
+
+        // listing,
+        // errors,
+        // formData: { rating, comment },
+        // currentUser: req.user // so you can still check if logged-in user can delete reviews
       });
+
+
     }
 
     // ✅ If validation passes, create and save review
