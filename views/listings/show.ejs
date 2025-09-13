@@ -48,7 +48,7 @@
           <label for="rating" class="form-label">Rating</label>
           <input type="range" min="1" max="5" id="rating" name="reviews[rating]" class="form-range" >
         </div> -->
-  <div class="mb-3 mt-3">
+  <!-- <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
 <fieldset class="starability-slot">
   
@@ -67,7 +67,51 @@
   <input type="radio" id="rate1" name="reviews[rating]" value="1" />
   <label for="rate1">1 star</label>
 </fieldset>
+</div> -->
+
+<div class="mb-3 mt-3">
+  <label for="rating" class="form-label">Rating</label>
+  <fieldset class="starability-slot">
+    <input type="radio" id="rate5" name="reviews[rating]" value="5" />
+    <label for="rate5" title="5 stars">★</label>
+
+    <input type="radio" id="rate4" name="reviews[rating]" value="4" />
+    <label for="rate4" title="4 stars">★</label>
+
+    <input type="radio" id="rate3" name="reviews[rating]" value="3" />
+    <label for="rate3" title="3 stars">★</label>
+
+    <input type="radio" id="rate2" name="reviews[rating]" value="2" />
+    <label for="rate2" title="2 stars">★</label>
+
+    <input type="radio" id="rate1" name="reviews[rating]" value="1" />
+    <label for="rate1" title="1 star">★</label>
+  </fieldset>
 </div>
+
+<style>
+.starability-slot input[type="radio"] {
+  display: none;
+}
+
+.starability-slot label {
+  font-size: 2rem;
+  color: #ccc; /* gray default */
+  cursor: pointer;
+}
+
+/* hover: turn yellow only up to the hovered star */
+.starability-slot label:hover,
+.starability-slot label:hover ~ label {
+  color: gold;
+}
+
+/* selected (checked): turn yellow only up to selected star */
+.starability-slot input[type="radio"]:checked ~ label {
+  color: gold;
+}
+</style>
+
 
         <div class="mb-3 mt-3">
           <label for="comment" class="form-label">Comments</label>
