@@ -66,7 +66,7 @@ module.exports.validateListing = (req, res, next) => {
 //    }
 // };
 
-const Listing = require("../models/listing.js");
+
 
 module.exports.validateReview = async (req, res, next) => {
   let { error } = reviewSchema.validate(req.body);
