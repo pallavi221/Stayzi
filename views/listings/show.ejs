@@ -43,32 +43,46 @@
           <% if(currUser) {%>
              <hr/>
       <h4>Leave a Review</h4>
+
+      
+<!-- ✅ Error Messages Block -->
+<% if (typeof errors !== "undefined" && errors.length > 0) { %>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <% errors.forEach(error => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
       <form action="/listings/<%= listing._id %>/reviews" method="POST"novalidate class="needs-validation">
-        <!-- <div class="mb-3 mt-3">
+        <div class="mb-3 mt-3">
           <label for="rating" class="form-label">Rating</label>
           <input type="range" min="1" max="5" id="rating" name="reviews[rating]" class="form-range" >
-        </div> -->
-  <!-- <div class="mb-3 mt-3">
+        </div>
+  <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
 <fieldset class="starability-slot">
   
-  <input type="radio" id="rate5" name="reviews[rating]" value="5" />
+  <input type="radio" id="rate5" name="reviews[rating]" value="5" <%= formData && formData.rating == 5 ? 'checked' : '' %> />
   <label for="rate5">5 stars</label>
 
-  <input type="radio" id="rate4" name="reviews[rating]" value="4" />
+  <input type="radio" id="rate4" name="reviews[rating]" value="4" <%= formData && formData.rating == 4 ? 'checked' : '' %>/>
   <label for="rate4">4 stars</label>
 
-  <input type="radio" id="rate3" name="reviews[rating]" value="3" />
+  <input type="radio" id="rate3" name="reviews[rating]" value="3" <%= formData && formData.rating == 3 ? 'checked' : '' %>/>
   <label for="rate3">3 stars</label>
 
-  <input type="radio" id="rate2" name="reviews[rating]" value="2" />
+  <input type="radio" id="rate2" name="reviews[rating]" value="2" <%= formData && formData.rating == 2? 'checked' : '' %>/>
   <label for="rate2">2 stars</label>
 
-  <input type="radio" id="rate1" name="reviews[rating]" value="1" />
+  <input type="radio" id="rate1" name="reviews[rating]" value="1" <%= formData && formData.rating == 1? 'checked' : '' %>/>
   <label for="rate1">1 star</label>
 </fieldset>
-</div> -->
+</div>
 
+<!-- 
 <div class="mb-3 mt-3">
   <label for="rating" class="form-label">Rating</label>
   <fieldset class="starability-slot">
@@ -87,7 +101,7 @@
     <input type="radio" id="rate1" name="reviews[rating]" value="1" />
     <label for="rate1" title="1 star">1star</label>
   </fieldset>
-</div>
+</div> -->
 
 <style>
 .starability-slot input[type="radio"] {
@@ -116,7 +130,7 @@
         <div class="mb-3 mt-3">
           <label for="comment" class="form-label">Comments</label>
           <textarea name="reviews[comment]" id="comment" cols="30" rows="5"
-           class="form-control" required></textarea>
+           class="form-control" required><%= formData && formData.comment ? formData.comment : '' %></textarea>
            <div class="invalid-feedback">Please add some comments for review</div>
         </div>
         <button class="btn btn-outline-dark">Submit</button>
