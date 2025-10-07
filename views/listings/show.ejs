@@ -15,14 +15,36 @@
    alt="listing_image"/>
  
   <div class="card-body">
-    <p class="card-text"><i>owned by:<%= listing.owner ? listing.owner.username : "Unknown" %></i></p>
+    <!-- <p class="card-text"><i>owned by:<%= listing.owner ? listing.owner.username : "Unknown" %></i></p>
 
       <p class="card-text"><%=listing.description%></p>
       <p class="card-text">&#8377;<%= Number(listing.price).toLocaleString("en-IN") %></p>
 
       <p class="card-text"><%= listing.location %></p>
       <p class="card-text"><%= listing.country%></p>
-      
+       -->
+  
+          <div class="stay-details">
+  <p><em>Owned by:</em> <strong><%= listing.owner ? listing.owner.username : "Unknown" %></strong></p>
+
+  <p class="desc"><%= listing.description %></p>
+
+  <div class="info">
+    <p><strong>Price:</strong> ₹<%= Number(listing.price).toLocaleString("en-IN") %></p>
+    <hr>
+    <p><strong>Location:</strong> <%= listing.location %></p>
+    <hr>
+    <p><strong>Country:</strong> <%= listing.country %></p>
+  </div>
+
+  <hr class="divider">
+
+  <h4>Your Stay Location :</h4>
+  <div id="map"></div>
+</div>
+
+
+
     </div>
       </div>
  
